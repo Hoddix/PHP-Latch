@@ -7,11 +7,11 @@ require_once 'latch/Latch.php';
 require_once 'latch/LatchResponse.php';
 require_once 'latch/Error.php';
 
-$APP_ID 		 = 'Ktyp3vXzpZtXw4fdcCRA';
-$APP_SECRET 	 = 'u4uPAqyyrz2mRrtnRVnKWatDcRLgvYd2eKRqiFeC';
-$api 			 = new Latch($APP_ID, $APP_SECRET);
-$conexion 		 = New Conexion();
-$user 			 = New Usuario();
+$APP_ID     = 'Ktyp3vXzpZtXw4fdcCRA';
+$APP_SECRET = 'u4uPAqyyrz2mRrtnRVnKWatDcRLgvYd2eKRqiFeC';
+$api 	    = new Latch($APP_ID, $APP_SECRET);
+$conexion   = New Conexion();
+$user 	    = New Usuario();
 
 if(isset($_POST['newUser'])){
 
@@ -73,12 +73,10 @@ elseif(isset($_POST['paring'])){
 }
 elseif(isset($_POST['iniciar'])){
 	
-	$usuario  	= $_POST['usuario'];
-	$password 	= $_POST['password'];
-
-	$login 		= $user->loginUsuario($usuario,$password);
-
-	$query 		= 'SELECT latch_id from usuarios where usuario = "'.$usuario.'"';
+	$usuario  = $_POST['usuario'];
+	$password = $_POST['password'];
+	$login 	  = $user->loginUsuario($usuario,$password);
+	$query 	  = 'SELECT latch_id from usuarios where usuario = "'.$usuario.'"';
 
 	if($consulta = $conexion->conectar->query($query)){
 
@@ -92,12 +90,11 @@ elseif(isset($_POST['iniciar'])){
 		if( $login ){
 
 			$statusResponse = $api->status($latch_id);	
-			$estado 		= $statusResponse->data->operations->Ktyp3vXzpZtXw4fdcCRA->status;	
+			$estado 	= $statusResponse->data->operations->Ktyp3vXzpZtXw4fdcCRA->status;	
 
 			if( $estado == 'on'){
 
 				$_SESSION['status']    = 'Latch Desbloqueado, sesion iniciada.';	
-
 				$_SESSION['desparear'] = true;
 
 				unset($_SESSION['omitido']);
@@ -153,15 +150,12 @@ elseif(isset($_POST['omitir'])){
 elseif(isset($_POST['unparing'])){
 	
 	$id_usuario = $_SESSION['id_usuario'];
-
-	$query = "SELECT latch_id from usuarios where id_usuario = '$id_usuario'";	
+	$query 	    = "SELECT latch_id from usuarios where id_usuario = '$id_usuario'";	
 
 	if($consulta = $conexion->conectar->query($query)){
 		
-		$latch_id = $consulta->fetch_assoc();
-	
-		$accountId = $latch_id['latch_id'];
-
+		$latch_id  	= $consulta->fetch_assoc();
+		$accountId 	= $latch_id['latch_id'];
 		$unpairResponse = $api->unpair($accountId);
 		
 		if( $unpairResponse->data == null && $unpairResponse->error == null){

@@ -13,16 +13,16 @@ class Usuario extends Conexion{
 	function generarSal(){ // Revidada
 
 		//DECLARAMOS LAS VARIABLES CON LAS CUALES GENERAREMOS EL SAL PARA CODIFICAR EL PASSWORD
-		$salAleatorio 		= "";
-		$length 			= 64; //INDICAMOS QUE EL TAMAÑO ES DE 64 CHARS
-		$indice 			= "";
-		$charElegido 		= "";
-		$listaCaracteres 	= "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; //LISTA DE CARACTERES PARA HACER EL SAL
+		$salAleatorio 	 = "";
+		$length 	 = 64; //INDICAMOS QUE EL TAMAÑO ES DE 64 CHARS
+		$indice 	 = "";
+		$charElegido 	 = "";
+		$listaCaracteres = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; //LISTA DE CARACTERES PARA HACER EL SAL
 		
-		settype($length 		, "integer");
-		settype($salAleatorio	, "string");
-		settype($indice			, "integer");
-		settype($charElegido	, "integer");
+		settype($length , "integer");
+		settype($salAleatorio, "string");
+		settype($indice	, "integer");
+		settype($charElegido, "integer");
 		
 		//GENERAMOS EL SAL CHAR A CHAR
 		for ($indice = 0; $indice <= $length; $indice++) {
@@ -44,10 +44,10 @@ class Usuario extends Conexion{
 	function generarPassword($password){ // Revidada
 
 		//LLAMAMOS A LA FUNCION QUE GENERAR EL SAL
-		$salAleatorio 			= $this->generarsal();
+		$salAleatorio 	 = $this->generarsal();
 		
 		//GENERAMOS EL PASS CIFRADO CON EL SAL
-		$passwordHaseado 		= hash('SHA256', "-".$salAleatorio."-".$password."-");
+		$passwordHaseado = hash('SHA256', "-".$salAleatorio."-".$password."-");
 		
 		//RETORNAMOS EL HASH Y PASS HASEADO PARA GUARDARLOS EN LA BD 
 		return $packEncriptado 	= array('0' => $salAleatorio,'1' => $passwordHaseado);
@@ -58,8 +58,8 @@ class Usuario extends Conexion{
 	function newUser($nombre,$email,$usuario,$password){
 
 		//OBTENEMOS LOS DATOS GENERADO A PARTIR DEL PASS DEL USUARIO
-		$pack 			= $this->generarPassword($password);
-		$sal 			= $pack[0];
+		$pack 		= $this->generarPassword($password);
+		$sal 		= $pack[0];
 		$password_hash 	= $pack[1];
 
 		//CONSULA PARA SACAR LA ID DE USUARIOS REPETIDOS
@@ -123,13 +123,13 @@ class Usuario extends Conexion{
 			if($consulta->num_rows == 1){
 
 				//SACAMOS EL RESULTADO DE LA CONSULTA ANTERIOR
-				$resultado 	 = $consulta->fetch_row();
+				$resultado      = $consulta->fetch_row();
 				$id_usuario_db  = $resultado[0];
-				$hash_db 	 = $resultado[1];
-				$usuario_db  = $resultado[2];
-				$password_db = $resultado[3];
-				$nombre_db 	 = $resultado[4];
-				$latch_id_db = $resultado[5];
+				$hash_db     	= $resultado[1];
+				$usuario_d	= $resultado[2];
+				$password_db 	= $resultado[3];
+				$nombre_db   	= $resultado[4];
+				$latch_id_db 	= $resultado[5];
 
 				//VARIABLE DE SESSION PARA MOSTRER EL NOMBRE
 				$_SESSION['nombre'] = $nombre_db;

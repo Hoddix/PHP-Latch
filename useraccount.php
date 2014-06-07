@@ -1,5 +1,10 @@
-<? session_start();?>
-<!doctype html>
+<?
+//INICIAMOS SESSION
+session_start();
+//ACCESO SIN LOGIN RESTRINGIDO
+if(isset($_SESSION['id_usuario'])){
+
+?>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -68,3 +73,10 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </html>
+<?
+}
+//ACCESO SIN LOGIN RESTRINGIDO
+else{
+	header('location: index.php');
+}
+?>

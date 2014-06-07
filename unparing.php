@@ -1,4 +1,10 @@
-<? session_start(); ?>
+<?
+//INICIAMOS SESSION
+session_start();
+//ACCESO SIN LOGIN RESTRINGIDO
+if(isset($_SESSION['id_usuario'])){
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -45,8 +51,8 @@
 					<button type="submit" name="unparing" class="btn btn-primary">Desparear de Latch</button>
 				</div>
 				<? 
-					if( isset( $_SESSION['status'] ) ) echo '<h5>No se ha podido desparear con exito.</h5>'; 
-					unset($_SESSION['status']);
+					if( isset( $_SESSION['error'] ) ) echo '<h5>'.$_SESSION['error'].'</h5>'; 
+					unset($_SESSION['error']);
 				?>
 			</form>	
 		</div>
@@ -56,3 +62,10 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </html>
+<?
+}
+//ACCESO SIN LOGIN RESTRINGIDO
+else{
+	header('location: index.php');
+}
+?>

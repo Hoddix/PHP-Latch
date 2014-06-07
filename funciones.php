@@ -13,15 +13,15 @@ require_once 'latch/LatchResponse.php';
 require_once 'latch/Error.php';
 
 //INICIALIZAMOS LAS VARIABLES CON LOS DATOS DE NUESTA APP EN LATCH
-$APP_ID 	= 'Ktyp3vXzpZtXw4fdcCRA';
-$APP_SECRET = 'u4uPAqyyrz2mRrtnRVnKWatDcRLgvYd2eKRqiFeC';
+$APP_ID     = 'ID DE TU APP';
+$APP_SECRET = 'SECRETO DE TU APP';
 
 //CREAMOS EL OBJETO API QUE HACE REFERENCIA A LA CLASE LATCH
-$api 		= new Latch($APP_ID, $APP_SECRET);
+$api 	  = new Latch($APP_ID, $APP_SECRET);
 //CREMAOS EL OBJETO CONEXION QUE HACE REFERENCIA A LA CLASE CONEXION
-$conexion 	= New Conexion();
+$conexion = New Conexion();
 //CREMOA EL OBJETO USER QUE HACER REFERENCIA A LA CLASE USUARIO
-$user 	  	= New Usuario();
+$user 	  = New Usuario();
 
 
 //SI NOS VIENE DEL FORMULARIO DE REGISTRO
@@ -59,8 +59,8 @@ elseif(isset($_POST['paring'])){
 	//REALIZAMOS EL PAREO 
 	if($success = $pairResponse->getData() ){
 
-		$id_usuario= $_SESSION['id_usuario'];
-		$accountId = $success->accountId;
+		$id_usuario = $_SESSION['id_usuario'];
+		$accountId  = $success->accountId;
 
 		//SI EL CORRECTO RECOGEMOS EL LATCH_ID Y LOS SUBIMOS A LA DB
 		$query = "UPDATE usuarios set latch_id = '$accountId' where id_usuario = '$id_usuario'";
@@ -115,7 +115,7 @@ elseif(isset($_POST['iniciar'])){
 		//EXTRAEMOS LOS DATOS
 		$ACCOUNT_ID = $consulta->fetch_assoc();
 		//VARIABLE CON EL CONTENIDO FINAL
-		$latch_id 	= $ACCOUNT_ID['latch_id'];
+		$latch_id   = $ACCOUNT_ID['latch_id'];
 
 	}
 
@@ -129,7 +129,7 @@ elseif(isset($_POST['iniciar'])){
 			//OBTENEMOS EL ESTADO DEL PESTILLO ON/OFF
 			$statusResponse = $api->status($latch_id);
 			//LO EXTRAEMOS	
-			$estado 		= $statusResponse->data->operations->Ktyp3vXzpZtXw4fdcCRA->status;	
+			$estado 	= $statusResponse->data->operations->Ktyp3vXzpZtXw4fdcCRA->status;	
 
 			//SI ES "ON"
 			if( $estado == 'on'){
@@ -203,15 +203,15 @@ elseif(isset($_POST['unparing'])){
 	//RECOGEMOS LA ID_USUARIO DE LA VARIABLE DE SESSION
 	$id_usuario = $_SESSION['id_usuario'];
 	//SENTENCIA PARA OBTENER LA LATCH_ID DEL USUARIO QUE SE QUIERE DESPAREAR
-	$query 		= "SELECT latch_id from usuarios where id_usuario = '$id_usuario'";	
+	$query 	    = "SELECT latch_id from usuarios where id_usuario = '$id_usuario'";	
 
 	//REALIZAMOS LA CONSULTA
 	if($consulta = $conexion->conectar->query($query)){
 		
 		//EXTRAEMOS LOS DATOS
-		$latch_id 		= $consulta->fetch_assoc();
+		$latch_id 	= $consulta->fetch_assoc();
 		//LOS GUARDAMOS EN SU VARIABLE FINAL
-		$accountId 		= $latch_id['latch_id'];
+		$accountId 	= $latch_id['latch_id'];
 		//LLAMAMOS AL METODO UNPAIR DE LA CLASE LATCH Y RECOGEMOS EL RESULTADO
 		$unpairResponse = $api->unpair($accountId);
 		
